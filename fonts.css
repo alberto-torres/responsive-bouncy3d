@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'chumley_ixiregular';
+  src: url('fonts/chumleyixi-webfont.woff2') format('woff2'),
+       url('fonts/chumleyixi-webfont.woff') format('woff');  
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'rooneysansregular';
+    src: url('fonts/rooneysans-regular-webfont.woff2') format('woff2'),
+         url('fonts/rooneysans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'rooneysansbold';
+    src: url('fonts/rooneysans-bold-webfont.woff2') format('woff2'),
+         url('fonts/rooneysans-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
