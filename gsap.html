@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style type = "text/css">
+
+            /* Apply a natural box layout model to all elements */
+            *, *:before, *:after {
+              -moz-box-sizing: border-box; 
+              -webkit-box-sizing: border-box; 
+              box-sizing: border-box; 
+            }
+
+            @font-face {
+              font-family: 'chumley_ixiregular';
+              src: url('fonts/chumleyixi-webfont.woff2') format('woff2'),
+                   url('fonts/chumleyixi-webfont.woff') format('woff');  
+              font-weight: normal;
+              font-style: normal;
+            }
+
+            @font-face {
+                font-family: 'rooneysansregular';
+                src: url('fonts/rooneysans-regular-webfont.woff2') format('woff2'),
+                     url('fonts/rooneysans-regular-webfont.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+
+            @font-face {
+                font-family: 'rooneysansbold';
+                src: url('fonts/rooneysans-bold-webfont.woff2') format('woff2'),
+                     url('fonts/rooneysans-bold-webfont.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+                font-display: swap;
+            }
+            
+
+            body{
+                background: #FFFFB3;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            html, body {
+              margin: 0;
+              height: 100%;
+              -webkit-overflow-scrolling: touch;
+              overflow-scrolling: touch;
+              font-family: "Signika Negative", sans-serif, Arial;
+            }
+
+            .panel {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                font-size: 1.5em;
+                text-align: center;
+                color: white;
+                position: relative;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+
+            body {
+                overflow-x: hidden;
+                overflow-y: scroll;
+            }
+
+            h1, h2, p, li {
+              max-width: 600px;
+              margin-bottom: 24px;
+            }
+            
+            /* Part of scrollTrigger */
+            #container {
+              width: 100%;
+              height: 100%; 
+              position: absolute;
+              top: 0;
+              left: 0;
+              overflow: hidden;
+            }
+
+            .panel {
+              position: absolute;
+              will-change: transform;
+            }
+
+            .yellow { background-color: #FFFFB3; }
+            .brown { background-color: #211b16; }
+
+            .panel.align-top {
+              align-items: flex-start;
+            }
+
+            .panel.description {
+              padding-bottom: 60px;
+            }
+
+            h1 {
+                font-family: 'chumley_ixiregular';
+                font-size: 25pt;
+                line-height: 35pt;
+                letter-spacing: 2pt;
+                font-weight: normal;
+            }
+
+            a {
+                color: white;
+                text-decoration: none;
+                border-bottom: 1px dotted #7a7673;
+            }
+
+            #thegame {
+                display: block;
+                margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                height: 100%;
+                z-index: 10;
+                font-family: 'chumley_ixiregular';
+            }
+
+            #intro {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                z-index: 100;
+                max-width: 350px;
+                min-height: 240px;
+                display: block;
+                margin-left: -175px;
+                margin-top: -120px;
+                padding: 0 24px;
+                background: rgba(36, 27, 22, 0.9);
+                color: white;
+                text-align: center;
+                opacity: 0;
+            }
+
+            .text-body {
+                font: 13pt/21pt 'rooneysansregular';
+            }
+
+            .text-title {
+                font: 14pt/22pt 'chumley_ixiregular';
+                letter-spacing: 3pt;
+            }
+
+            .btn {
+
+               border: none;
+               color: #211b16;
+               background-color: white;
+               padding: 6px 12px;
+
+               line-height: 26pt;
+               letter-spacing: 3pt;
+
+            } 
+
+            .brown div {padding: 24px;}
+
+
+        </style>
+        <script src = "phaser.min.js"></script>
+		<script src = "three.min.js"></script>
+		<script src = "Phaser3D.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src = "game.js"></script>
+    </head>
+	<body>
+
+    <div id="container">   
+    
+        <div class="panel yellow">
+            <div>
+                <div id="thegame"></div>
+                <div id="intro" class="text-body">
+                    <p>Toca la pantalla o mantén presionado tu mouse para avanzar.</p>
+                    <p><button id="btn_start" class="btn text-title">Jugar</button></p>
+                    <p>Scroll hacia abajo para ver más info.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="panel brown">
+            <div class="text-body">
+                <h1>Ejercicio interactivo</h1>
+                <p>Combinar tecnologías de: UI, responsividad, animación 2D y 3D, video juegos y web scroll; para ser desplegadas en cualquier navegador web moderno. Dependencias: Phaser v3.20.1, ThreeJs , Phaser3D, GSAP w/ scrollTrigger v3.12.5</p>
+                <p>Basado en: <a href="https://www.emanueleferonato.com/2020/07/29/bouncing-light-phaser-prototype-rendered-in-3d-thanks-to-three-js-and-phaser-3d-library/">Bouncing Light Phaser 3D prototype</a><br>Creado por: <a href="https://ixi.studio/">Ixi Studio</a></p>
+            </div>
+        </section>
+        
+    </div>
+
+	</body>
+</html>

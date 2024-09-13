@@ -66,8 +66,9 @@ let is_resize = false; // Is the screen resizing at the moment
 let has_first_load = false; // Is this the first start
 let screen_last_size = [];
 screen_last_size.push([window.innerWidth, window.innerHeight]);
-let platform_landscape_compensate = 0;
-let platform_landscape_ball_compensate = -9;
+let is_landscape = window.innerWidth > window.innerHeight ? true : false; 
+let platform_landscape_compensate = is_landscape ? 0 : 0;
+let platform_landscape_ball_compensate = is_landscape ? -9 : -9;
 
 // Throttler 
 
@@ -91,33 +92,13 @@ function throttler( callback ) {
 // Window Resize functions 
 
 function resize(e) {
-    
-    //has_first_load doesnt work because it runs earlier
-
-    if(game && game.scene.isPaused("PlayGame")) {
-        // restart the game
-        //game.scene.start("PlayGame");
-        //console.log( game.getTime() );
-        //console.log( game.getFrame() );
-        
-        //game = new Phaser.Game(gameConfig);
-        
-        is_resize = true;       
-        game.scene.scenes[0].manual_update();
-
-        //game.destroy();
-        //game.update();
-    } else {
-        is_resize = true;       
-    }
-
+  is_resize = true;
 };
 
-//*
 window.addEventListener("resize", function() {
   throttler(resize);  
 }, false);
-//*/
+
 
 
 class playGame extends Phaser.Scene{
@@ -238,7 +219,6 @@ class playGame extends Phaser.Scene{
             z: 0,
         });
 
-        // Make sure ball renders on top
         this.ball3D.renderOrder = 200;
         // set the ball to cast a shadow
         this.phaser3D.castShadow(this.ball3D);
@@ -371,17 +351,11 @@ class playGame extends Phaser.Scene{
         return rightmostPlatform;
     }
 
-    // Used to run the update function just once
-    manual_update() {
-        this.update();
-        this.scene.pause();   
-    }
-
     // method to be executed at each frame
     update(){
 
         var platform_new_y;
-console.log("updated is_resize " + is_resize);
+
         if(!is_resize) {
             
             // collision management ball Vs platforms
@@ -405,7 +379,7 @@ console.log("updated is_resize " + is_resize);
                 screen_last_width = last_screen[0];
 
             //console.log("screen_last_height " + screen_last_height + " screen_last_width: " + screen_last_width);
-            //this.ball.setSize(30, 50, true);
+            this.ball.setSize(30, 50, true);
 
         }
 
@@ -439,9 +413,6 @@ console.log("updated is_resize " + is_resize);
             if(is_resize) {
 
                 
-                this.sys.game.canvas.width = window.innerWidth; 
-                this.sys.game.canvas.height = window.innerHeight; 
-
                 // Calculate percentage of positioning for ball, and platform
                 // Reapply
                 
@@ -484,10 +455,8 @@ console.log("updated is_resize " + is_resize);
             this.phaser3D.camera.updateProjectionMatrix();
 
             //this.phaser3D.renderer.setSize(this.sys.game.canvas.width,this.sys.game.canvas.height);
-            //this.phaser3D.renderer.setViewport(0, 0, this.sys.game.canvas.width,this.sys.game.canvas.height);
-console.log( "this.sys.game.canvas.width,this.sys.game.canvas.height " + this.sys.game.canvas.width + " " + this.sys.game.canvas.height);
-            this.phaser3D.renderer.setViewport(0, 0, window.innerWidth,window.innerHeight);
-console.log( "this.sys.game.canvas.width,this.sys.game.canvas.height " + window.innerWidth + " " + window.innerHeight);
+            this.phaser3D.renderer.setViewport(0, 0, this.sys.game.canvas.width,this.sys.game.canvas.height);
+
             //this.phaser3D.renderer.resetState();
             this.phaser3D.renderer.render(this.phaser3D.scene, this.phaser3D.camera);
 
@@ -568,10 +537,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             parent: "thegame",
         },
         physics: {
-            default: "arcade",
-            arcade: {
-                customUpdate: true
-            }
+            default: "arcade"
         },
         scene: playGame
     }
@@ -614,9 +580,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 end: "+=300%",
                 scrub: true,
                 pin: true
-              },
-              onUpdate: () => {
-                console.log("asd");
               }
             });
 
