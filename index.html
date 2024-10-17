@@ -1,8 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 	<head>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style type = "text/css">
+
+            /* Apply a natural box layout model to all elements */
+            *, *:before, *:after {
+              -moz-box-sizing: border-box; 
+              -webkit-box-sizing: border-box; 
+              box-sizing: border-box; 
+            }
 
             @font-face {
               font-family: 'chumley_ixiregular';
@@ -29,13 +37,7 @@
                 font-style: normal;
                 font-display: swap;
             }
-
-            /* Apply a natural box layout model to all elements */
-            *, *:before, *:after {
-              -moz-box-sizing: border-box; 
-              -webkit-box-sizing: border-box; 
-              box-sizing: border-box; 
-            }
+            
 
             body{
                 background: #FFFFB3;
@@ -43,7 +45,82 @@
                 margin: 0px;
             }
 
+            html, body {
+              margin: 0;
+              height: 100%;
+              -webkit-overflow-scrolling: touch;
+              overflow-scrolling: touch;
+              font-family: sans-serif, Arial;
+            }
+
+            .panel {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+                font-size: 1.5em;
+                text-align: center;
+                color: white;
+                position: relative;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+
+            body {
+                overflow-x: hidden;
+                overflow-y: scroll;
+                background-color: #211b16;
+            }
+
+            h1, h2, p, li {
+              max-width: 600px;
+              margin-bottom: 24px;
+            }
+            
+            /* Part of scrollTrigger */
+            #container {
+              width: 100%;
+              height: 100%; 
+              position: absolute;
+              top: 0;
+              left: 0;
+              overflow: hidden;
+            }
+
+            .panel {
+              position: absolute;
+              will-change: transform;
+            }
+
+            .yellow { background-color: #FFFFB3; z-index: 3; }
+            .brown { background-color: #211b16; }
+
+            .panel.align-top {
+              align-items: flex-start;
+            }
+
+            .panel.description {
+              padding-bottom: 60px;
+            }
+
+            h1 {
+                font-family: 'chumley_ixiregular';
+                font-size: 25pt;
+                line-height: 35pt;
+                letter-spacing: 2pt;
+                font-weight: normal;
+            }
+
+            a {
+                color: white;
+                text-decoration: none;
+                border-bottom: 1px dotted #7a7673;
+            }
+
             #thegame {
+                
                 display: block;
                 margin: 0;
                 position: absolute;
@@ -52,19 +129,25 @@
                 transform: translate(-50%, -50%);
                 width: 100%;
                 height: 100%;
+                /**/
+                max-width: 100vw;
+                max-height: 100vh;
+
                 z-index: 10;
                 font-family: 'chumley_ixiregular';
+                background-color: #ffffb3;
             }
+
 
             #intro {
                 position: absolute;
                 left: 50%;
                 top: 50%;
                 z-index: 100;
-                width: 249px;
-                height: 240px;
+                max-width: 350px;
+                min-height: 240px;
                 display: block;
-                margin-left: -150px;
+                margin-left: -175px;
                 margin-top: -120px;
                 padding: 0 24px;
                 background: rgba(36, 27, 22, 0.9);
@@ -79,6 +162,7 @@
 
             .text-title {
                 font: 14pt/22pt 'chumley_ixiregular';
+                letter-spacing: 3pt;
             }
 
             .btn {
@@ -93,35 +177,50 @@
 
             } 
 
+            .brown div {padding: 24px;}
 
-            /*
-            
-            PANELS
-
-             */
 
         </style>
-        <script src = "phaser.min.js"></script>
-		<script src = "three.min.js"></script>
-		<script src = "Phaser3D.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/phaser@v3.85.2/dist/phaser.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-        <script src = "game.js"></script>
+        <script src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+        <script type="importmap">
+            {
+                "imports": {
+                    
+                    "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+                }
+            }
+        </script>
+        <script type="module" src="page-game.js"></script>
     </head>
 	<body>
-        
-        <section id="section-1" class="panel">
-            <div id="thegame"></div>
-            <div id="intro" class="text-body">
-                <p>Press down and hold your mouse to move forward</p>
-                <p><button id="btn_start" class="btn text-title">Play</button></p>
-                <p>Scroll down to view info about this example.</p>
+
+    <div id="container">   
+    
+        <div class="panel yellow">
+            <div>
+                <div id="thegame"><canvas id="game-canvas"></canvas></div>
+                <div id="intro" class="text-body">
+                    <p>Toca la pantalla o mantén presionado tu mouse para avanzar.</p>
+                    <p><button id="btn_start" class="btn text-title">Empezar</button></p>
+                    <p>Scroll hacia abajo para ver más info.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="panel brown">
+            <div class="text-body">
+                <h1>Ejercicio interactivo</h1>
+                <p>Combinar tecnologías de: UI, responsividad, animación 2D y 3D, video juegos y scroll animation; para ser desplegadas mediante un navegador web moderno. Dependencias: Phaser v3.85.2, ThreeJS r162,  GSAP w/ scrollTrigger v3.12.5.</p>
+                <p><a href="https://ixi.studio/">Más info aquí</a></p>
+
             </div>
         </section>
-        <!-- section id="section-2">
-            <p class="text-title">Phraser, Pharser3D, GSAP, scrollTrigger demo example</p>
-            This game is base on: 
-            Functions added: responsiveness, new colors and fonts, GSAP with scrollTrigger. 
-        </section-->
+        
+    </div>
+
 	</body>
 </html>
