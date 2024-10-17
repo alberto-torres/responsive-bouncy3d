@@ -1,4 +1,5 @@
-# php-ixi-tools
+# responsive-bouncy3d
+
 
 Combine technologies of: UI, responsiveness, 2D and 3D animation, video games and scroll animation; to be deployed via a modern web browser. Dependencies: Phaser v3.85.2, ThreeJS r162, GSAP w/ scrollTrigger v3.12.5.
 
