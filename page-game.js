@@ -78,7 +78,6 @@ class playGame extends Phaser.Scene {
     material_3D_platform = false;
     mesh_3D_platform = false;
 
-
     // Audio markers
     audio_markers = [
 
@@ -146,7 +145,6 @@ class playGame extends Phaser.Scene {
 
     // method to create the 3D world
     create3DWorld() {
-
 
         //* threejs
         
@@ -225,9 +223,7 @@ class playGame extends Phaser.Scene {
             }
 
             // Render 
-            //this.renderer3D.clear();
             this.renderer3D.render(this.threeScene, this.camera3D);
-            //this.renderer3D.clearDepth();
             
             // You may need this if you see rendering problems. This demo doesn't need it
             //this.renderer3D.state.reset();
@@ -351,7 +347,7 @@ class playGame extends Phaser.Scene {
             let geometry = this.geometry_3D_platform = new THREE.BoxGeometry(1, 20, 20);
             let material = this.material_3D_platform = new THREE.MeshStandardMaterial(); 
             platform3D = this.mesh_3D_platform = new THREE.Mesh(geometry, material);
-            //console.log(platform3D);
+
         }
 
         // create shape
@@ -378,10 +374,10 @@ class playGame extends Phaser.Scene {
         this.topScore = localStorage.getItem(gameOptions.localStorageName) == null ? 0 : localStorage.getItem(gameOptions.localStorageName);
         this.scoreText = this.add.text(10, 10, "--");
         this.scoreText.setStyle({
-            fontSize: '20px',
-            fontFamily: 'chumley_ixiregular',
+            fontSize: '25px',
+            fontFamily: 'comictansregular',
             color: '#211b16',
-            lineHeight: '27px',
+            lineHeight: '30pt',
             align: 'left',
         });
 
@@ -393,7 +389,7 @@ class playGame extends Phaser.Scene {
         this.score += inc;
         this.scoreText.text = "Puntos: " + this.score + "\nRecord: " + this.topScore;
 
-        // is is a multiple of 16, advance loop
+        // is is a multiple of 15, advance loop
         if(this.score % 15 == 0) {
 
             // Play sounds fx
@@ -492,7 +488,6 @@ class playGame extends Phaser.Scene {
 
         }
         var plat_counter = 0;
-        //console.log(this.platformGroup);
 
         // loop through all platforms
         this.platformGroup.getChildren().forEach(function(platform) {
@@ -654,7 +649,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const my_game_context = my_game_canvas.getContext('webgl1', context_creation_config);
 
 
-    // Phaser
+    // Phaser game config
 
     let gameConfig = {
         type: Phaser.WEBGL,
@@ -663,7 +658,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         scale: {
             // Scaling is handled independently
             mode: Phaser.Scale.NO_SCALE,
-            //autoCenter: Phaser.Scale.CENTER_BOTH,
             parent: "thegame",
             width: window.innerWidth,
             height: window.innerHeight,
@@ -715,8 +709,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         // Game started variable update
         has_game_started = true;
 
-//sound.setVolume()
-
+        // Play sound
         game.sound.play('sfx', game.scene.scenes[0].audio_markers[0]);
 
     });
